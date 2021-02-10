@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/service-registry/service-registry.iml" filepath="$PROJECT_DIR$/service-registry/service-registry.iml" />
       <module fileurl="file://$PROJECT_DIR$/stocktrader/stocktrader.iml" filepath="$PROJECT_DIR$/stocktrader/stocktrader.iml" />
+      <module fileurl="file://$PROJECT_DIR$/useraccount/useraccount.iml" filepath="$PROJECT_DIR$/useraccount/useraccount.iml" />
     </modules>
   </component>
 </project>
