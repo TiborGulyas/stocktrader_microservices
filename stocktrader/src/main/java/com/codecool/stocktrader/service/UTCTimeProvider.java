@@ -2,13 +2,14 @@ package com.codecool.stocktrader.service;
 
 import com.codecool.stocktrader.component.DataInitializer;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Component
+@Service
 public class UTCTimeProvider {
 
     private Map<String, Long> UTCTimeStamps = new HashMap<>();

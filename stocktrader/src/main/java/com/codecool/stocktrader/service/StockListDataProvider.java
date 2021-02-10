@@ -6,6 +6,7 @@ import com.codecool.stocktrader.repository.LastPriceRepository;
 import com.codecool.stocktrader.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-@Component
+@Service
 public class StockListDataProvider {
 
     @Autowired

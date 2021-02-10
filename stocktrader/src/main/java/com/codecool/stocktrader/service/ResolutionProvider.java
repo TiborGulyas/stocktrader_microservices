@@ -2,8 +2,9 @@ package com.codecool.stocktrader.service;
 
 import com.codecool.stocktrader.model.Resolution;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class ResolutionProvider {
     public Resolution createResolution(String param){
         if (param.equals("1")){

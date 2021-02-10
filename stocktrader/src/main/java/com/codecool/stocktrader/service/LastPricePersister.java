@@ -7,10 +7,12 @@ import com.codecool.stocktrader.repository.StockRepository;
 import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 import java.util.Calendar;
 
 
-@Component
+@Service
 public class LastPricePersister {
 
     @Autowired
