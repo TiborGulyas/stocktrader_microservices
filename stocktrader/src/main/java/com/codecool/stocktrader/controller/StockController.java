@@ -71,6 +71,7 @@ public class StockController {
 
     @GetMapping("/getquote/{symbol}")
     public LastPrice returnCurrentPrice(@PathVariable("symbol") String symbol) {
+        System.out.println("GETQUOTE REQUESTED");
         Stock stock = stockRepository.findBySymbol(symbol);
         return lastPriceRepository.findByStock(stock);
     }
@@ -79,6 +80,17 @@ public class StockController {
     public Stock returnStock(@PathVariable("symbol") String symbol) {
         Stock stock = stockRepository.findBySymbol(symbol);
         return stock;
+    }
+
+    @GetMapping("/getallstocks/")
+    public StockList returnAllStock() {
+        StockList stockList = new StockList();
+        List<Stock> stocks = stockRepository.findAll();
+        for (Stock stock:stocks) {
+            stockList.getStocks().add(stock);
+        }
+        return stockList;
+
     }
 
     @GetMapping("/getAllLastPrice")
