@@ -30,7 +30,6 @@ public class UseraccountApplication {
 	@Bean
 	public CommandLineRunner init() {
 		return args -> {
-			System.out.println("init persistance");
 			dataInitializer.initData();
 		};
 	}
