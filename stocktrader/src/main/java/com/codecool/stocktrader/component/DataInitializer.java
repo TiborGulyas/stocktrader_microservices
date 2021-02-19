@@ -141,7 +141,7 @@ public class DataInitializer {
         Map<String, Long> UTCTimeStamps2021_02_15 = new HashMap<>();
         Calendar fromDate2021_02_15 = Calendar.getInstance();
         fromDate2021_02_15.set(2021,1,12,15,30,0);
-        UTCTimeStamps2021_01_18.put("from", fromDate2021_01_18.getTimeInMillis()/1000);
+        UTCTimeStamps2021_02_15.put("from", fromDate2021_02_15.getTimeInMillis()/1000);
         Calendar toDate2021_02_15 = Calendar.getInstance();
         toDate2021_02_15.set(2021,1,12,22,0, 0);
         UTCTimeStamps2021_02_15.put("to", toDate2021_02_15.getTimeInMillis()/1000);

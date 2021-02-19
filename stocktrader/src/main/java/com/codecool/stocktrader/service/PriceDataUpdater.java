@@ -47,6 +47,7 @@ public class PriceDataUpdater {
             System.out.println("getquote: "+response);
             lastPricePersister.persistCurrentPrice(response, symbol);
         }
+        apiCall.postCall();
     }
 
 

@@ -13,6 +13,7 @@ public class ApiStringProvider {
     private final String currentPriceAPIbase = "https://finnhub.io/api/v1/quote?symbol=";
     private String candleAPIToken = "&token=" + System.getenv("FINNHUB_TOKEN");
     private String stockData = "https://finnhub.io/api/v1/stock/profile2?symbol=";
+    public String matchAllOffer = "http://localhost:8091/offer/matchall";
 
     @Autowired
     private UTCTimeProvider utcTimeProvider;
