@@ -47,6 +47,7 @@ public class StockController {
 
     }
 
+    //USED
     @GetMapping("/getcandle/{symbol}")
     public ReactCandleContainer returnIntraday(@PathVariable("symbol") String symbol) {
         Stock stock = stockRepository.findBySymbol(symbol);
@@ -69,6 +70,7 @@ public class StockController {
 
     }
 
+    //USED
     @GetMapping("/getquote/{symbol}")
     public LastPrice returnCurrentPrice(@PathVariable("symbol") String symbol) {
         System.out.println("GETQUOTE REQUESTED");
@@ -76,12 +78,14 @@ public class StockController {
         return lastPriceRepository.findByStock(stock);
     }
 
+    //USED
     @GetMapping("/getstock/{symbol}")
     public Stock returnStock(@PathVariable("symbol") String symbol) {
         Stock stock = stockRepository.findBySymbol(symbol);
         return stock;
     }
 
+    //USED by userAccount
     @GetMapping("/getallstocks/")
     public StockList returnAllStock() {
         StockList stockList = new StockList();
@@ -98,12 +102,13 @@ public class StockController {
         return lastPriceRepository.findAll();
     }
 
-
+    //USED
     @GetMapping("/getStockListData")
     public  List<StockListData> returnStockListData(){
         return stockListDataProvider.provideStockListData();
     }
 
+    //USED
     @GetMapping("/getStockSymbols")
     public  List<String> returnStockNameList(){
         return stockListDataProvider.provideStockNameList();

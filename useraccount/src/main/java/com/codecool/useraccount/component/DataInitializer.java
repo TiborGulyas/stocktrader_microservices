@@ -9,6 +9,7 @@ import com.codecool.useraccount.repository.UserAccountRepository;
 
 import com.codecool.useraccount.service_caller.StockTraderServiceCaller;
 import com.google.gson.JsonObject;
+import nonapi.io.github.classgraph.json.JSONUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -44,6 +45,11 @@ public class DataInitializer {
 
         // PERSIST ALL STOCKS
         StockList stocks = stockTraderServiceCaller.getAllStocks();
+
+        stocks.getStocks().forEach(stock ->
+                stockRepository.save(stock));
+
+
         stocks.getStocks().forEach(stock ->
                 stockRepository.save(stock));
 

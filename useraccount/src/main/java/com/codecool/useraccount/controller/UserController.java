@@ -45,7 +45,7 @@ public class UserController {
     PortfolioAvailableCashForPurchaseProvider portfolioAvailableCashForPurchaseProvider;
 
 
-
+    //USED
     @PostMapping("/placeoffer/{symbol}/{offerType}/{quantity}/{price}")
     public String placeOffer(@PathVariable("symbol") String symbol, @PathVariable("offerType") String offerType, @PathVariable("quantity") int quantity, @PathVariable("price") float price){
         boolean approvalQuantity = false;
@@ -92,6 +92,7 @@ public class UserController {
         return "Offer Accepted!";
     }
 
+    //USED
     @PostMapping("/replaceoffer/{id}/{symbol}/{offerType}/{quantity}/{price}")
     public String replaceOffer(@PathVariable("id") Long id, @PathVariable("symbol") String symbol, @PathVariable("offerType") String offerType, @PathVariable("quantity") int quantity, @PathVariable("price") float price){
         boolean approvalQuantity = false;
@@ -138,15 +139,17 @@ public class UserController {
         return "Offer is NOT replaced!";
     }
 
-
+    //USED
     @DeleteMapping("/deleteoffer/{id}")
     public String deleteOffer(@PathVariable("id") long id){
         UserAccount defaultUserAccount = userAccountRepository.findByNickName("Mr.T");
         List<Offer> userOffers = defaultUserAccount.getOffers();
+        System.out.println("offer to be deleted: "+id);
         for (Offer offer: userOffers) {
             if (offer.getId() == id){
-                userOffers.remove(offer);
-                userAccountRepository.save(defaultUserAccount);
+                //userOffers.remove(offer);
+                //userAccountRepository.save(defaultUserAccount);
+                userAccountRepository.deleteById(id);
                 return "Offer deleted!";
             }
         }
@@ -169,12 +172,14 @@ public class UserController {
         return defaultUserAccount.getOffers();
     }
 
+    //USED
     @GetMapping("getoffers/{stock}")
     public List<Offer> getOffersPerStock(@PathVariable("stock") String stock){
         UserAccount defaultUserAccount = userAccountRepository.findByNickName("Mr.T");
         return defaultUserAccount.getOffers().stream().filter(offer -> offer.getStock().getSymbol().equals(stock)).collect(Collectors.toList());
     }
 
+    //USED
     @GetMapping("getStockPerformanceList")
     public List<StockPerformance> getStockPerformanceList(){
         UserAccount defaultUserAccount = userAccountRepository.findByNickName("Mr.T");
@@ -182,6 +187,7 @@ public class UserController {
 
     }
 
+    //USED
     @GetMapping("getStockPerformance/{stock}")
     public StockPerformance getStockPerformanceListPerStock(@PathVariable("stock") String stock_){
         UserAccount defaultUserAccount = userAccountRepository.findByNickName("Mr.T");
@@ -189,7 +195,7 @@ public class UserController {
         return stockPerformanceListUpdater.getStockPerformance(defaultUserAccount, stock);
     }
 
-
+    //USED
     @GetMapping("getportfolioperformance")
     public PortfolioPerformance getPortfolioPerformance(){
         UserAccount defaultUserAccount = userAccountRepository.findByNickName("Mr.T");
@@ -212,6 +218,7 @@ public class UserController {
                 .build();
     }
 
+    //USED
     @GetMapping("getprofilecardinfo")
     public ProfileCardInfo getProfileCardInfo(){
         UserAccount defaultUserAccount = userAccountRepository.findByNickName("Mr.T");
@@ -230,7 +237,7 @@ public class UserController {
         return defaultUserAccount.getCash();
     }
 
-
+    //USED
     @GetMapping("getStockDataForOffer/{stock}")
     public TradeSupportData getStockDataForOffer(@PathVariable("stock") String stock_){
         UserAccount defaultUserAccount = userAccountRepository.findByNickName("Mr.T");
