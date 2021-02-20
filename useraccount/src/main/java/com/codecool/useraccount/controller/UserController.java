@@ -11,9 +11,10 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
-@CrossOrigin
+//@CrossOrigin(methods = {GET, POST, PUT, DELETE}, origins = "http://localhost:3000")
 @RequestMapping("/user")
 public class UserController {
 
@@ -147,9 +148,9 @@ public class UserController {
         System.out.println("offer to be deleted: "+id);
         for (Offer offer: userOffers) {
             if (offer.getId() == id){
-                //userOffers.remove(offer);
-                //userAccountRepository.save(defaultUserAccount);
-                userAccountRepository.deleteById(id);
+                userOffers.remove(offer);
+                userAccountRepository.save(defaultUserAccount);
+                //offerRepository.deleteById(id);
                 return "Offer deleted!";
             }
         }

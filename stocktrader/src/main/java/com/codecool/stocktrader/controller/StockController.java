@@ -11,9 +11,10 @@ import com.codecool.stocktrader.service.StockListDataProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
-@CrossOrigin
+//@CrossOrigin(methods = {GET, POST, PUT, DELETE})
 @RequestMapping("/stock")
 public class StockController {
 
