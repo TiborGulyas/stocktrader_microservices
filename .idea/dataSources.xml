@@ -13,5 +13,11 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/stockuseraccount</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="stockUser@localhost" uuid="888d38a2-1ab1-45ab-aab2-7143dc01427b">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/stockuser</jdbc-url>
+    </data-source>
   </component>
 </project>
