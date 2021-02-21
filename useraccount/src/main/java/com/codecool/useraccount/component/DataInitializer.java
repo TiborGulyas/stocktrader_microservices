@@ -10,9 +10,11 @@ import com.codecool.useraccount.repository.UserAccountRepository;
 import com.codecool.useraccount.service_caller.StockTraderServiceCaller;
 import com.google.gson.JsonObject;
 import nonapi.io.github.classgraph.json.JSONUtils;
+import org.apache.http.impl.BHttpConnectionBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -36,6 +38,12 @@ public class DataInitializer {
     @Autowired
     private StockTraderServiceCaller stockTraderServiceCaller;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @Autowired
+    private PingHost pingHost;
+
 
     public void initData() throws IOException, ParseException {
         System.out.println("init persistance");
@@ -53,6 +61,17 @@ public class DataInitializer {
         stocks.getStocks().forEach(stock ->
                 stockRepository.save(stock));
 
+
+        //SAVE TRADER
+        int port = 8071;
+        String apicall = "http://userservice/saveuser";
+        Trader testTrader = Trader.builder()
+                .password("helloworld")
+                .username("---hw---")
+                .build();
+        if (pingHost.pingHost("localhost", port, 100)){
+            restTemplate.postForLocation(apicall, testTrader);
+        }
 
         // INIT DEFAULT ACCOUNT
         UserAccount userAccount = UserAccount.builder()

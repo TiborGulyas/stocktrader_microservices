@@ -23,7 +23,6 @@ public class UserAccount {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long userId;
     private String username;
     private String nickName;
     @Column(length = 10000)

@@ -20,8 +20,8 @@ public class UserController {
     }
 
     @PostMapping("saveuser")
-    public boolean saveUser(@RequestBody Trader user) {
-        userRepository.save(user);
+    public boolean saveUser(@RequestBody Trader trader) {
+        userRepository.save(trader);
         return true;
     }
 }
