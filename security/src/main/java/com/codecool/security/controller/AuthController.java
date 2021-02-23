@@ -69,12 +69,13 @@ public class AuthController {
         return token_username;
     }
 
+    /*
     @PostMapping("/registertrader")
     public boolean registerUser(@RequestBody TraderRegistrationForm traderRegistrationForm){
         System.out.println("AUTH CONTROLLER --TrdaerRegForm: ");
         System.out.println(traderRegistrationForm);
         return userServiceCaller.registerTrader(traderRegistrationForm);
     }
-
+    */
 
 }

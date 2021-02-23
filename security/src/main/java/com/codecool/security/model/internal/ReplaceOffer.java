@@ -1,4 +1,4 @@
-package com.codecool.useraccount.model.apimodels;
+package com.codecool.security.model.internal;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PlaceOffer {
+public class ReplaceOffer {
+    private long offerId;
     private String symbol;
     private String offerType;
     private int quantity;

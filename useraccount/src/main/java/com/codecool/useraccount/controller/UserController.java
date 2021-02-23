@@ -1,7 +1,8 @@
 package com.codecool.useraccount.controller;
 
 import com.codecool.useraccount.model.*;
-import com.codecool.useraccount.model.apimodels.PlaceOffer;
+import com.codecool.useraccount.model.internal.PlaceOffer;
+import com.codecool.useraccount.model.internal.ReplaceOffer;
 import com.codecool.useraccount.repository.OfferRepository;
 import com.codecool.useraccount.repository.StockRepository;
 import com.codecool.useraccount.repository.UserAccountRepository;
@@ -11,9 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
 //@CrossOrigin(methods = {GET, POST, PUT, DELETE}, origins = "http://localhost:3000")
@@ -102,12 +101,20 @@ public class UserController {
     }
 
     //USED
-    @PostMapping("/replaceoffer/{id}/{symbol}/{offerType}/{quantity}/{price}")
-    public String replaceOffer(@PathVariable("id") Long id, @PathVariable("symbol") String symbol, @PathVariable("offerType") String offerType, @PathVariable("quantity") int quantity, @PathVariable("price") float price){
+    @PostMapping("/replaceoffer")
+    public String replaceOffer(@RequestBody ReplaceOffer replaceOffer){
         boolean approvalQuantity = false;
         boolean approvalCash = false;
+
+        long id = replaceOffer.getOfferId();
+        float price = replaceOffer.getPrice();
+        int quantity = replaceOffer.getQuantity();
+        String offerType = replaceOffer.getOfferType();
+        String symbol = replaceOffer.getSymbol();
+        String username = replaceOffer.getUserName();
+
         double newOfferTotalValue = NumberRounder.roundDouble(price*quantity, 2);
-        UserAccount userAccount = userAccountRepository.findByNickName("Mr.T");
+        UserAccount userAccount = userAccountRepository.findByUsername(username);
         OfferType newOfferType = offerTypeProvider.createOfferType(offerType);
         Stock stock = stockRepository.findBySymbol(symbol);
         Offer offer = offerRepository.getOne(id);

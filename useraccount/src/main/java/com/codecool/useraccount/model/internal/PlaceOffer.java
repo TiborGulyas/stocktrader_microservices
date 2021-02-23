@@ -1,4 +1,4 @@
-package com.codecool.security.model;
+package com.codecool.useraccount.model.internal;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
