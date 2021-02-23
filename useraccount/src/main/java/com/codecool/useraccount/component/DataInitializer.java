@@ -64,7 +64,7 @@ public class DataInitializer {
 
         //SAVE TRADER
         int port = 8071;
-        String apicall = "http://userservice/saveuser";
+        String apicall = "http://userservice/registeruser";
         Trader testTrader = Trader.builder()
                 .password("helloworld")
                 .username("gulyastibor")

@@ -28,8 +28,8 @@ public class UserController {
         return userRepository.findByUsername(username);
     }
 
-    @PostMapping("saveuser")
-    public boolean saveUser(@RequestBody Trader trader) {
+    @PostMapping("registeruser")
+    public boolean registerUser(@RequestBody Trader trader) {
         List<String> role = Arrays.asList("ROLE_USER");
         Trader encyptedTrader = Trader.builder()
                 .username(trader.getUsername())

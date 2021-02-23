@@ -12,10 +12,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -62,4 +60,18 @@ public class AuthController {
             throw new BadCredentialsException("Invalid username/password supplied");
         }
     }
+
+    @GetMapping("/me")
+    public String currentUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String token_username = (String) authentication.getPrincipal();
+        return token_username;
+    }
+
+    @PostMapping("/register")
+    public boolean registerUser(@RequestBody UserCredentials userCredentials){
+        return userServiceCaller.registerTrader(userCredentials);
+    }
+
+
 }

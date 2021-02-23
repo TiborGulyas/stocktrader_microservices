@@ -6,12 +6,17 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final JwtTokenServices jwtTokenServices;
 
+    public SecurityConfig(JwtTokenServices jwtTokenServices) {
+        this.jwtTokenServices = jwtTokenServices;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -23,11 +28,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/auth/signin").permitAll() // allowed by anyone
+                .antMatchers("/auth/register").permitAll() // allowed by anyone
                 .antMatchers("/stock/getallstocks").permitAll() // allowed by anyone
-                .antMatchers( "/user/**").authenticated() // allowed only when signed in
+                .antMatchers( "/auth/**").authenticated() // allowed only when signed in
                 .antMatchers( "/stock/**").authenticated() // allowed only when signed in
                 //.antMatchers(HttpMethod.DELETE, "/vehicles/**").hasRole("ADMIN") // allowed if signed in with ADMIN role
-                .anyRequest().denyAll(); // anything else is denied
+                .anyRequest().denyAll() // anything else is denied
+                .and()
+                .addFilterBefore(new JwtTokenFilter(jwtTokenServices), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
