@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController()
 @RequestMapping("/auth/user")
-public class UserController {
+public class UserAccountController {
 
 
 }

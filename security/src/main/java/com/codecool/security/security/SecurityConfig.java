@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/auth/signin").permitAll() // allowed by anyone
-                .antMatchers("/auth/register").permitAll() // allowed by anyone
+                .antMatchers("/auth/registertrader").permitAll() // allowed by anyone
                 .antMatchers("/stock/getallstocks").permitAll() // allowed by anyone
                 .antMatchers( "/auth/**").authenticated() // allowed only when signed in
                 .antMatchers( "/stock/**").authenticated() // allowed only when signed in

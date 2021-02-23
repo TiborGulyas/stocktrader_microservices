@@ -8,6 +8,7 @@ import com.codecool.useraccount.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -249,6 +250,23 @@ public class UserController {
                 .stockQuantity(stockPerformanceListUpdater.getStockPerformance(defaultUserAccount, stock).getStockTotalAmount())
                 .build();
 
+    }
+
+    @PostMapping("/registeruseraccount")
+    public boolean registerUserAccount(@RequestBody UserAccountRegistration userAccountRegistration){
+        System.out.println("----thisistheuser:------");
+        System.out.println(userAccountRegistration);
+        UserAccount userAccount = UserAccount.builder()
+                .cash(NumberRounder.roundDouble(1000000,2))
+                .cashInvested(NumberRounder.roundDouble(1000000,2))
+                .username(userAccountRegistration.getUsername())
+                .nickName(userAccountRegistration.getNickName())
+                .dateOfRegistration(new Date())
+                .profilePic_(userAccountRegistration.getProfilePic_())
+                .eMail_(userAccountRegistration.getEMail_())
+                .build();
+        userAccountRepository.save(userAccount);
+        return true;
     }
 }
 

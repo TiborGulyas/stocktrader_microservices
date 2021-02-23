@@ -1,6 +1,7 @@
 package com.codecool.security.controller;
 
 
+import com.codecool.security.model.TraderRegistrationForm;
 import com.codecool.security.model.UserCredentials;
 import com.codecool.security.security.JwtTokenServices;
 import com.codecool.security.service_caller.UserServiceCaller;
@@ -68,9 +69,11 @@ public class AuthController {
         return token_username;
     }
 
-    @PostMapping("/register")
-    public boolean registerUser(@RequestBody UserCredentials userCredentials){
-        return userServiceCaller.registerTrader(userCredentials);
+    @PostMapping("/registertrader")
+    public boolean registerUser(@RequestBody TraderRegistrationForm traderRegistrationForm){
+        System.out.println("AUTH CONTROLLER --TrdaerRegForm: ");
+        System.out.println(traderRegistrationForm);
+        return userServiceCaller.registerTrader(traderRegistrationForm);
     }
 
 

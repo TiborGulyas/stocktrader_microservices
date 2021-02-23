@@ -5,19 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Trader {
-    private Long id;
+public class TraderRegistrationForm {
     private String username;
     private String password;
-
-    // roles of the user (ADMIN, USER,..)
-    @Builder.Default
-    private List<String> roles = new ArrayList<>();
+    private String nickName;
+    private String profilePic_;
+    private String e_mail;
 }
