@@ -10,7 +10,10 @@ import org.springframework.stereotype.Component;
 public class PortfolioAvailableCashForPurchaseProvider {
     public double providePortfolioAvailableCashForPurchase(UserAccount userAccount){
         double availableCash = userAccount.getCash();
-        double cashInOffers = userAccount.getOffers().stream().mapToDouble(Offer::getTotalValue).sum();
+        double cashInOffers = 0;
+        if (userAccount.getOffers().size()>0){
+            cashInOffers += userAccount.getOffers().stream().mapToDouble(Offer::getTotalValue).sum();
+        }
         return availableCash-cashInOffers;
     }
 }

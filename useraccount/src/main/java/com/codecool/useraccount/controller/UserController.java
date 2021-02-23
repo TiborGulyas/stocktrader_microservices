@@ -1,6 +1,7 @@
 package com.codecool.useraccount.controller;
 
 import com.codecool.useraccount.model.*;
+import com.codecool.useraccount.model.apimodels.PlaceOffer;
 import com.codecool.useraccount.repository.OfferRepository;
 import com.codecool.useraccount.repository.StockRepository;
 import com.codecool.useraccount.repository.UserAccountRepository;
@@ -48,12 +49,18 @@ public class UserController {
 
 
     //USED
-    @PostMapping("/placeoffer/{symbol}/{offerType}/{quantity}/{price}")
-    public String placeOffer(@PathVariable("symbol") String symbol, @PathVariable("offerType") String offerType, @PathVariable("quantity") int quantity, @PathVariable("price") float price){
+    @PostMapping("/placeoffer")
+    public String placeOffer(@RequestBody PlaceOffer placeOffer){
         boolean approvalQuantity = false;
         boolean approvalCash = false;
+        float price = placeOffer.getPrice();
+        int quantity = placeOffer.getQuantity();
+        String symbol = placeOffer.getSymbol();
+        String offerType = placeOffer.getOfferType();
+        String username = placeOffer.getUserName();
+
         double newOfferTotalValue = NumberRounder.roundDouble(price*quantity,2);
-        UserAccount userAccount = userAccountRepository.findByNickName("Mr.T");
+        UserAccount userAccount = userAccountRepository.findByUsername(username);
         Stock stock = stockRepository.findBySymbol(symbol);
         OfferType offerTypeObj = offerTypeProvider.createOfferType(offerType);
 
@@ -252,6 +259,7 @@ public class UserController {
 
     }
 
+    //USED
     @PostMapping("/registeruseraccount")
     public boolean registerUserAccount(@RequestBody UserAccountRegistration userAccountRegistration){
         System.out.println("----thisistheuser:------");
