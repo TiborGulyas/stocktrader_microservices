@@ -67,7 +67,7 @@ public class DataInitializer {
         String apicall = "http://userservice/saveuser";
         Trader testTrader = Trader.builder()
                 .password("helloworld")
-                .username("---hw---")
+                .username("gulyastibor")
                 .build();
         if (pingHost.pingHost("localhost", port, 100)){
             restTemplate.postForLocation(apicall, testTrader);

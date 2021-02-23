@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<Trader, Long> {
     Trader findById(long id);
+    Trader findByUsername(String username);
 }

@@ -3,8 +3,13 @@ package com.codecool.userservice.controller;
 import com.codecool.userservice.model.Trader;
 import com.codecool.userservice.repository.UserRepository;
 import com.codecool.userservice.service.PasswordEncrypter;
+import org.apache.catalina.LifecycleState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 @RestController
@@ -18,16 +23,18 @@ public class UserController {
     @Autowired
     private PasswordEncrypter passwordEncrypter;
 
-    @GetMapping("getuser/{id}")
-    public Trader getUser(@PathVariable("id") long id) {
-        return userRepository.findById(id);
+    @GetMapping("getuser/{username}")
+    public Trader getUser(@PathVariable("username") String username) {
+        return userRepository.findByUsername(username);
     }
 
     @PostMapping("saveuser")
     public boolean saveUser(@RequestBody Trader trader) {
+        List<String> role = Arrays.asList("ROLE_USER");
         Trader encyptedTrader = Trader.builder()
                 .username(trader.getUsername())
                 .password(passwordEncrypter.encodePassword(trader.getPassword()))
+                .roles(role)
                 .build();
 
         userRepository.save(encyptedTrader);
