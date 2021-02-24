@@ -20,6 +20,7 @@ public class UserServiceCaller {
         return template.getForObject(getTraderURL + username, Trader.class);
     }
 
+
     /*
     public Boolean registerTrader(TraderRegistrationForm traderRegistrationForm){
         return template.postForObject(registerUserURL, traderRegistrationForm, Boolean.class);

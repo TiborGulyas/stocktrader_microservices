@@ -1,6 +1,7 @@
 package com.codecool.useraccount.controller;
 
 import com.codecool.useraccount.model.*;
+import com.codecool.useraccount.model.internal.OfferList;
 import com.codecool.useraccount.model.internal.PlaceOffer;
 import com.codecool.useraccount.model.internal.ReplaceOffer;
 import com.codecool.useraccount.repository.OfferRepository;
@@ -174,20 +175,23 @@ public class UserController {
         return "Offer is NOT deleted!";
     }
 
-    @GetMapping("getuseraccount")
-    public UserAccount getUserAccount(){
-        UserAccount defaultUserAccount = userAccountRepository.findByNickName("Mr.T");
-        stockPerformanceListUpdater.getStockPerformanceList(defaultUserAccount);
-        portfolioPerformanceUpdater.updatePortfolioPerformance(defaultUserAccount);
-        userAccountRepository.save(defaultUserAccount);
+    @GetMapping("getuseraccount/{username}")
+    public UserAccount getUserAccount(@PathVariable("username") String username){
+        UserAccount userAccount = userAccountRepository.findByUsername(username);
+        //stockPerformanceListUpdater.getStockPerformanceList(userAccount);
+        //portfolioPerformanceUpdater.updatePortfolioPerformance(userAccount);
+        //userAccountRepository.save(userAccount);
 
-        return userAccountRepository.findByNickName("Mr.T");
+        return userAccount;
     }
 
-    @GetMapping("getalloffers")
-    public List<Offer> getAllOffers(){
-        UserAccount defaultUserAccount = userAccountRepository.findByNickName("Mr.T");
-        return defaultUserAccount.getOffers();
+    @GetMapping("getalloffers/{username}")
+    public OfferList getAllOffers(@PathVariable("username") String username){
+        UserAccount userAccount = userAccountRepository.findByUsername(username);
+        OfferList offerList = OfferList.builder()
+                .offers(userAccount.getOffers())
+                .build();
+        return offerList;
     }
 
     //USED

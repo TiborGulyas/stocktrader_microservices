@@ -1,14 +1,14 @@
 package com.codecool.security.controller;
 
 
-import com.codecool.security.model.internal.DeleteOffer;
-import com.codecool.security.model.internal.PlaceOffer;
-import com.codecool.security.model.internal.ReplaceOffer;
+import com.codecool.security.model.internal.*;
 import com.codecool.security.service_caller.UserAccountCaller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController()
 @RequestMapping("/auth/user")
@@ -63,6 +63,22 @@ public class UserAccountController {
                 .build();
 
         return userAccountCaller.deleteOffer(deleteOffer);
+    }
+
+    @GetMapping("/getuseraccount")
+    public UserAccount getUserAccount(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String token_username = (String) authentication.getPrincipal();
+
+        return userAccountCaller.getuseraccount(token_username);
+    }
+
+    @GetMapping("/getalloffers")
+    public OfferList getAllOffers(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String token_username = (String) authentication.getPrincipal();
+
+        return userAccountCaller.getAllOffers(token_username);
     }
 
 }

@@ -16,17 +16,17 @@ public class PortfolioPerformance {
     //@GeneratedValue(strategy = GenerationType.AUTO)
     //private Long id;
 
-    private double investedCash = 0;
-    private double portfolioTotalValue = 0;
-    private double portfolioTotalStockValue = 0;
-    private double portfolioFreeCashValue = 0;
-    private double portfolioTotalStockPurchaseValue = 0;
-    private double percentageStockValue = 0;
-    private double percentageCashValue = 0;
-    private double currentStockProfit = 0;
-    private double investedCashProfit = 0;
-    private double percentageCurrentStockProfit = 0;
-    private double percentageInvestedCashProfit = 0;
+    private double investedCash;
+    private double portfolioTotalValue;
+    private double portfolioTotalStockValue;
+    private double portfolioFreeCashValue;
+    private double portfolioTotalStockPurchaseValue;
+    private double percentageStockValue;
+    private double percentageCashValue;
+    private double currentStockProfit;
+    private double investedCashProfit;
+    private double percentageCurrentStockProfit;
+    private double percentageInvestedCashProfit;
 
 }
 

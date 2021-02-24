@@ -22,43 +22,57 @@ public class PortfolioPerformanceUpdater {
     public PortfolioPerformance updatePortfolioPerformance(UserAccount userAccount){
         //PortfolioPerformance portfolioPerformance = userAccount.getPortfolioPerformance();
         //System.out.println("this is the portfolio performance: "+portfolioPerformance);
-        PortfolioPerformance portfolioPerformance = new PortfolioPerformance();
-        List<StockPurchase> portfolio = userAccount.getPortfolio();
-        HashMap<String, LastPrice> lastPricesRequested = new HashMap<>();
+        PortfolioPerformance portfolioPerformance = PortfolioPerformance.builder()
+                .currentStockProfit(0)
+                .investedCash(userAccount.getCashInvested())
+                .investedCashProfit(0)
+                .percentageCashValue(0)
+                .percentageCurrentStockProfit(0)
+                .percentageInvestedCashProfit(0)
+                .percentageStockValue(0)
+                .portfolioFreeCashValue(userAccount.getCash())
+                .portfolioTotalStockPurchaseValue(0)
+                .portfolioTotalStockValue(0)
+                .portfolioTotalValue(userAccount.getCash())
+                .build();
 
-        //MAKE DB CALL ONLY IF NEW LAST PRICE APPEARS
-        portfolio.forEach(
-                stockPurchase -> {
-                    if (!lastPricesRequested.containsKey(stockPurchase.getStock().getSymbol())) {
-                        lastPricesRequested.put(stockPurchase.getStock().getSymbol(), lastPriceProvider.getLastPrice(stockPurchase.getStock()));
-                    }
-                });
+        if (userAccount.getPortfolio().size() > 0){
+            List<StockPurchase> portfolio = userAccount.getPortfolio();
+            HashMap<String, LastPrice> lastPricesRequested = new HashMap<>();
 
-        System.out.println("STOCKS OF STOCKPURCHASE:");
-        System.out.println(lastPricesRequested);
+            //MAKE DB CALL ONLY IF NEW LAST PRICE APPEARS
+            portfolio.forEach(
+                    stockPurchase -> {
+                        if (!lastPricesRequested.containsKey(stockPurchase.getStock().getSymbol())) {
+                            lastPricesRequested.put(stockPurchase.getStock().getSymbol(), lastPriceProvider.getLastPrice(stockPurchase.getStock()));
+                        }
+                    });
 
-        portfolioPerformance.setPortfolioTotalStockValue(NumberRounder.roundDouble(portfolio.stream()
-                .mapToDouble(stockPurchase ->
-                        stockPurchase.getQuantity() * lastPricesRequested.get(stockPurchase.getStock().getSymbol()).getCurrentPrice()).sum(), 2)
-        );
+            System.out.println("STOCKS OF STOCKPURCHASE:");
+            System.out.println(lastPricesRequested);
 
-        portfolioPerformance.setCurrentStockProfit(NumberRounder.roundDouble(portfolio.stream().mapToDouble(
-                stockPurchase -> (lastPricesRequested.get(stockPurchase.getStock().getSymbol()).getCurrentPrice() - stockPurchase.getPurchasePrice()) * stockPurchase.getQuantity()).sum(), 2)
-        );
+            portfolioPerformance.setPortfolioTotalStockValue(NumberRounder.roundDouble(portfolio.stream()
+                    .mapToDouble(stockPurchase ->
+                            stockPurchase.getQuantity() * lastPricesRequested.get(stockPurchase.getStock().getSymbol()).getCurrentPrice()).sum(), 2)
+            );
 
-        portfolioPerformance.setPortfolioTotalStockPurchaseValue(NumberRounder.roundDouble(portfolio.stream().mapToDouble(
-                stockPurchase -> stockPurchase.getQuantity()*stockPurchase.getPurchasePrice()).sum(), 2)
-        );
+            portfolioPerformance.setCurrentStockProfit(NumberRounder.roundDouble(portfolio.stream().mapToDouble(
+                    stockPurchase -> (lastPricesRequested.get(stockPurchase.getStock().getSymbol()).getCurrentPrice() - stockPurchase.getPurchasePrice()) * stockPurchase.getQuantity()).sum(), 2)
+            );
 
-        portfolioPerformance.setPortfolioTotalValue(NumberRounder.roundDouble(userAccount.getCash()+portfolioPerformance.getPortfolioTotalStockValue(),2));
-        portfolioPerformance.setPercentageStockValue(NumberRounder.roundDouble(portfolioPerformance.getPortfolioTotalStockValue()/portfolioPerformance.getPortfolioTotalValue()*100, 2));
-        portfolioPerformance.setPercentageCashValue(NumberRounder.roundDouble(userAccount.getCash()/portfolioPerformance.getPortfolioTotalValue()*100, 2));
-        portfolioPerformance.setInvestedCashProfit(NumberRounder.roundDouble(portfolioPerformance.getPortfolioTotalValue()-userAccount.getCashInvested(),2));
-        portfolioPerformance.setPercentageCurrentStockProfit(NumberRounder.roundDouble(portfolioPerformance.getCurrentStockProfit()/portfolioPerformance.getPortfolioTotalStockPurchaseValue()*100,2));
-        portfolioPerformance.setPercentageInvestedCashProfit(NumberRounder.roundDouble((portfolioPerformance.getPortfolioTotalValue()/userAccount.getCashInvested()-1)*100,2));
-        portfolioPerformance.setPortfolioFreeCashValue(NumberRounder.roundDouble(userAccount.getCash(),2));
-        portfolioPerformance.setInvestedCash(NumberRounder.roundDouble(userAccount.getCashInvested(),2));
+            portfolioPerformance.setPortfolioTotalStockPurchaseValue(NumberRounder.roundDouble(portfolio.stream().mapToDouble(
+                    stockPurchase -> stockPurchase.getQuantity()*stockPurchase.getPurchasePrice()).sum(), 2)
+            );
 
+            portfolioPerformance.setPortfolioTotalValue(NumberRounder.roundDouble(userAccount.getCash()+portfolioPerformance.getPortfolioTotalStockValue(),2));
+            portfolioPerformance.setPercentageStockValue(NumberRounder.roundDouble(portfolioPerformance.getPortfolioTotalStockValue()/portfolioPerformance.getPortfolioTotalValue()*100, 2));
+            portfolioPerformance.setPercentageCashValue(NumberRounder.roundDouble(userAccount.getCash()/portfolioPerformance.getPortfolioTotalValue()*100, 2));
+            portfolioPerformance.setInvestedCashProfit(NumberRounder.roundDouble(portfolioPerformance.getPortfolioTotalValue()-userAccount.getCashInvested(),2));
+            portfolioPerformance.setPercentageCurrentStockProfit(NumberRounder.roundDouble(portfolioPerformance.getCurrentStockProfit()/portfolioPerformance.getPortfolioTotalStockPurchaseValue()*100,2));
+            portfolioPerformance.setPercentageInvestedCashProfit(NumberRounder.roundDouble((portfolioPerformance.getPortfolioTotalValue()/userAccount.getCashInvested()-1)*100,2));
+            portfolioPerformance.setPortfolioFreeCashValue(NumberRounder.roundDouble(userAccount.getCash(),2));
+            portfolioPerformance.setInvestedCash(NumberRounder.roundDouble(userAccount.getCashInvested(),2));
+        }
         return  portfolioPerformance;
 
         /*
