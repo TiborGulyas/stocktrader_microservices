@@ -1,5 +1,6 @@
 package com.codecool.security.service_caller;
 
+import com.codecool.security.model.internal.DeleteOffer;
 import com.codecool.security.model.internal.PlaceOffer;
 import com.codecool.security.model.internal.ReplaceOffer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,10 @@ public class UserAccountCaller {
 
     public String replaceOffer(ReplaceOffer replaceOffer) {
         return template.postForObject(registerUserAccountURL+"replaceoffer", replaceOffer, String.class);
+    }
+
+    public String deleteOffer(DeleteOffer deleteOffer) {
+        template.delete(registerUserAccountURL+"deleteoffer/"+deleteOffer.getOfferId()+"/"+deleteOffer.getUserName());
+        return "Offer deleted!";
     }
 }

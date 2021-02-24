@@ -1,7 +1,6 @@
 package com.codecool.security.controller;
 
 
-import com.codecool.security.model.TraderRegistrationForm;
 import com.codecool.security.model.UserCredentials;
 import com.codecool.security.security.JwtTokenServices;
 import com.codecool.security.service_caller.UserServiceCaller;

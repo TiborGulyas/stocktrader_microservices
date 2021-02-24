@@ -156,13 +156,15 @@ public class UserController {
     }
 
     //USED
-    @DeleteMapping("/deleteoffer/{id}")
-    public String deleteOffer(@PathVariable("id") long id){
-        UserAccount defaultUserAccount = userAccountRepository.findByNickName("Mr.T");
+    @DeleteMapping("/deleteoffer/{offerId}/{username}")
+    public String deleteOffer(@PathVariable("offerId") Long offerId, @PathVariable("username") String username){
+        System.out.println("DELETE OFFER TRIGGERED");
+
+        UserAccount defaultUserAccount = userAccountRepository.findByUsername(username);
         List<Offer> userOffers = defaultUserAccount.getOffers();
-        System.out.println("offer to be deleted: "+id);
+        System.out.println("offer to be deleted: "+offerId);
         for (Offer offer: userOffers) {
-            if (offer.getId() == id){
+            if (offer.getId() == offerId){
                 userOffers.remove(offer);
                 userAccountRepository.save(defaultUserAccount);
                 //offerRepository.deleteById(id);

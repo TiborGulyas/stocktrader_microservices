@@ -1,6 +1,7 @@
 package com.codecool.security.controller;
 
 
+import com.codecool.security.model.internal.DeleteOffer;
 import com.codecool.security.model.internal.PlaceOffer;
 import com.codecool.security.model.internal.ReplaceOffer;
 import com.codecool.security.service_caller.UserAccountCaller;
@@ -49,6 +50,19 @@ public class UserAccountController {
                 .build();
 
         return userAccountCaller.replaceOffer(replaceOffer);
+    }
+
+    @DeleteMapping("/deleteoffer/{id}")
+    public String deleteOffer(@PathVariable("id") Long id){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String token_username = (String) authentication.getPrincipal();
+
+        DeleteOffer deleteOffer = DeleteOffer.builder()
+                .offerId(id)
+                .userName(token_username)
+                .build();
+
+        return userAccountCaller.deleteOffer(deleteOffer);
     }
 
 }
