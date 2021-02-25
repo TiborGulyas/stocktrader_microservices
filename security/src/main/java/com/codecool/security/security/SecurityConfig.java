@@ -31,9 +31,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/signin").permitAll() // allowed by anyone
                 .antMatchers("/auth/registertrader").permitAll() // allowed by anyone
                 .antMatchers("/stock/getallstocks").permitAll() // allowed by anyone
-                .antMatchers("/auth/**").authenticated() // allowed only when signed in
-                //.antMatchers(HttpMethod.POST,"/auth/**").authenticated() // allowed only when signed in
+                .antMatchers(HttpMethod.POST,"/auth/**").authenticated() // allowed only when signed in
                 .antMatchers(HttpMethod.DELETE,"/auth/**").authenticated() // allowed only when signed in
+                .antMatchers("/auth/**").authenticated() // allowed only when signed in
                 .antMatchers( "/stock/**").authenticated() // allowed only when signed in
                 //.antMatchers(HttpMethod.DELETE, "/vehicles/**").hasRole("ADMIN") // allowed if signed in with ADMIN role
                 .anyRequest().denyAll() // anything else is denied

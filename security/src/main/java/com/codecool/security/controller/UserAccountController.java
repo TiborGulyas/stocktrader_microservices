@@ -37,6 +37,7 @@ public class UserAccountController {
 
     @PostMapping("/replaceoffer/{id}/{symbol}/{offerType}/{quantity}/{price}")
     public String replaceOffer(@PathVariable("id") Long id, @PathVariable("symbol") String symbol, @PathVariable("offerType") String offerType, @PathVariable("quantity") int quantity, @PathVariable("price") float price){
+        System.out.println("REPLACEOFFER TRIGGERED");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String token_username = (String) authentication.getPrincipal();
 
