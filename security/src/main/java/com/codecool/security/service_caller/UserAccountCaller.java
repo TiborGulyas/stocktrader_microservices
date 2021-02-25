@@ -39,12 +39,30 @@ public class UserAccountCaller {
         return template.getForObject(userAccountURL+"getalloffers/"+username, OfferList.class);
     }
 
-    public OfferList getOffersPerStock(String username, String stock) {
-        return template.getForObject(userAccountURL+"getoffers/"+username+"/"+stock, OfferList.class);
+    public OfferList getOffersPerStock(String username, String stock_) {
+        System.out.println("GET OFFERS PER STOCK: ");
+        System.out.println(stock_);
+        return template.getForObject(userAccountURL+"getoffers/"+username+"/"+stock_, OfferList.class);
     }
 
     public StockPerformanceList getStockPerformanceList(String username) {
         return template.getForObject(userAccountURL+"getStockPerformanceList/"+username, StockPerformanceList.class);
+    }
+
+    public StockPerformance getStockPerformance(String username, String stock) {
+        return template.getForObject(userAccountURL+"getstockperformance/"+username+"/"+stock, StockPerformance.class);
+    }
+
+    public PortfolioPerformance getPortfolioPerformance(String username) {
+        return template.getForObject(userAccountURL+"getportfolioperformance/"+username, PortfolioPerformance.class);
+    }
+
+    public ProfileCardInfo getProfileCardInfo(String username) {
+        return template.getForObject(userAccountURL+"getprofilecardinfo/"+username, ProfileCardInfo.class);
+    }
+
+    public TradeSupportData getStockDataForOffer(String username, String stock) {
+        return template.getForObject(userAccountURL+"getstockdataforoffer/"+username+"/"+stock, TradeSupportData.class);
     }
 
 }

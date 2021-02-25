@@ -197,10 +197,12 @@ public class UserController {
 
     //USED
     @GetMapping("getoffers/{username}/{stock}")
-    public OfferList getOffersPerStock(@PathVariable("username") String username, @PathVariable("stock") String stock){
+    public OfferList getOffersPerStock(@PathVariable("username") String username, @PathVariable("stock") String stock_){
+        System.out.println("----GET OFFERS DATA:");
+        System.out.println(username+", "+stock_);
         UserAccount userAccount = userAccountRepository.findByUsername(username);
         OfferList offerList = OfferList.builder()
-                .offers(userAccount.getOffers().stream().filter(offer -> offer.getStock().getSymbol().equals(stock)).collect(Collectors.toList()))
+                .offers(userAccount.getOffers().stream().filter(offer -> offer.getStock().getSymbol().equals(stock_)).collect(Collectors.toList()))
                 .build();
         return offerList;
     }
@@ -216,18 +218,18 @@ public class UserController {
     }
 
     //USED
-    @GetMapping("getStockPerformance/{stock}")
-    public StockPerformance getStockPerformanceListPerStock(@PathVariable("stock") String stock_){
-        UserAccount defaultUserAccount = userAccountRepository.findByNickName("Mr.T");
+    @GetMapping("getstockperformance/{username}/{stock}")
+    public StockPerformance getStockPerformanceListPerStock(@PathVariable("username") String username, @PathVariable("stock") String stock_){
+        UserAccount userAccount = userAccountRepository.findByUsername(username);
         Stock stock = stockRepository.findBySymbol(stock_);
-        return stockPerformanceListUpdater.getStockPerformance(defaultUserAccount, stock);
+        return stockPerformanceListUpdater.getStockPerformance(userAccount, stock);
     }
 
     //USED
-    @GetMapping("getportfolioperformance")
-    public PortfolioPerformance getPortfolioPerformance(){
-        UserAccount defaultUserAccount = userAccountRepository.findByNickName("Mr.T");
-        return portfolioPerformanceUpdater.updatePortfolioPerformance(defaultUserAccount);
+    @GetMapping("getportfolioperformance/{username}")
+    public PortfolioPerformance getPortfolioPerformance(@PathVariable("username") String username){
+        UserAccount userAccount = userAccountRepository.findByUsername(username);
+        return portfolioPerformanceUpdater.updatePortfolioPerformance(userAccount);
         //userAccountRepository.save(defaultUserAccount);
         //return userAccountRepository.findByNickName("Mr.T").getPortfolioPerformance();
     }
@@ -247,15 +249,15 @@ public class UserController {
     }
 
     //USED
-    @GetMapping("getprofilecardinfo")
-    public ProfileCardInfo getProfileCardInfo(){
-        UserAccount defaultUserAccount = userAccountRepository.findByNickName("Mr.T");
+    @GetMapping("getprofilecardinfo/{username}")
+    public ProfileCardInfo getProfileCardInfo(@PathVariable("username") String username){
+        UserAccount userAccount = userAccountRepository.findByUsername(username);
 
         return ProfileCardInfo.builder()
-                .username(defaultUserAccount.getUsername())
-                .nickName(defaultUserAccount.getNickName())
-                .profilePic(defaultUserAccount.getProfilePic_())
-                .dateOfRegistration(defaultUserAccount.getDateOfRegistration())
+                .username(userAccount.getUsername())
+                .nickName(userAccount.getNickName())
+                .profilePic(userAccount.getProfilePic_())
+                .dateOfRegistration(userAccount.getDateOfRegistration())
                 .build();
     }
 
@@ -266,14 +268,14 @@ public class UserController {
     }
 
     //USED
-    @GetMapping("getStockDataForOffer/{stock}")
-    public TradeSupportData getStockDataForOffer(@PathVariable("stock") String stock_){
-        UserAccount defaultUserAccount = userAccountRepository.findByNickName("Mr.T");
+    @GetMapping("getstockdataforoffer/{username}/{stock}")
+    public TradeSupportData getStockDataForOffer(@PathVariable("username") String username, @PathVariable("stock") String stock_){
+        UserAccount userAccount = userAccountRepository.findByUsername(username);
         Stock stock = stockRepository.findBySymbol(stock_);
 
         return TradeSupportData.builder()
-                .availableCash(portfolioAvailableCashForPurchaseProvider.providePortfolioAvailableCashForPurchase(defaultUserAccount))
-                .stockQuantity(stockPerformanceListUpdater.getStockPerformance(defaultUserAccount, stock).getStockTotalAmount())
+                .availableCash(portfolioAvailableCashForPurchaseProvider.providePortfolioAvailableCashForPurchase(userAccount))
+                .stockQuantity(stockPerformanceListUpdater.getStockPerformance(userAccount, stock).getStockTotalAmount())
                 .build();
 
     }

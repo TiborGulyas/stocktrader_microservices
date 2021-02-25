@@ -1,11 +1,9 @@
-package com.codecool.useraccount.model;
+package com.codecool.security.model.internal;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.*;
-
-import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor

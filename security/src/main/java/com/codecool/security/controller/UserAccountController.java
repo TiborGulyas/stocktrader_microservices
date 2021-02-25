@@ -82,14 +82,16 @@ public class UserAccountController {
     }
 
     @GetMapping("/getoffers/{stock}")
-    public OfferList getOffersPerStock(@PathVariable("stock") String stock){
+    public OfferList getOffersPerStock(@PathVariable("stock") String stock_){
+        System.out.println("!!!GETOFFERS STOCk string: ");
+        System.out.println(stock_);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String token_username = (String) authentication.getPrincipal();
 
-        return userAccountCaller.getOffersPerStock(token_username, stock);
+        return userAccountCaller.getOffersPerStock(token_username, stock_);
     }
 
-    @GetMapping("getStockPerformanceList")
+    @GetMapping("getstockperformancelist")
     public StockPerformanceList getStockPerformanceList(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String token_username = (String) authentication.getPrincipal();
@@ -97,4 +99,35 @@ public class UserAccountController {
         return userAccountCaller.getStockPerformanceList(token_username);
     }
 
+    @GetMapping("getstockperformance/{stock}")
+    public StockPerformance getStockPerformance(@PathVariable("stock") String stock){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String token_username = (String) authentication.getPrincipal();
+
+        return userAccountCaller.getStockPerformance(token_username, stock);
+    }
+
+    @GetMapping("getportfolioperformance")
+    public PortfolioPerformance getPortfolioPerformance(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String token_username = (String) authentication.getPrincipal();
+
+        return userAccountCaller.getPortfolioPerformance(token_username);
+    }
+
+    @GetMapping("getprofilecardinfo")
+    public ProfileCardInfo getProfileCardInfo(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String token_username = (String) authentication.getPrincipal();
+
+        return userAccountCaller.getProfileCardInfo(token_username);
+    }
+
+    @GetMapping("getstockdataforoffer/{stock}")
+    public TradeSupportData getStockDataForOffer(@PathVariable("stock") String stock){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String token_username = (String) authentication.getPrincipal();
+
+        return userAccountCaller.getStockDataForOffer(token_username, stock);
+    }
 }
