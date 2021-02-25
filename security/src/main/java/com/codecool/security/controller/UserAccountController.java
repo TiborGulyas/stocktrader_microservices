@@ -81,4 +81,20 @@ public class UserAccountController {
         return userAccountCaller.getAllOffers(token_username);
     }
 
+    @GetMapping("/getoffers/{stock}")
+    public OfferList getOffersPerStock(@PathVariable("stock") String stock){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String token_username = (String) authentication.getPrincipal();
+
+        return userAccountCaller.getOffersPerStock(token_username, stock);
+    }
+
+    @GetMapping("getStockPerformanceList")
+    public StockPerformanceList getStockPerformanceList(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String token_username = (String) authentication.getPrincipal();
+
+        return userAccountCaller.getStockPerformanceList(token_username);
+    }
+
 }

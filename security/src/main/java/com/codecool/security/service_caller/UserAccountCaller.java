@@ -3,6 +3,7 @@ package com.codecool.security.service_caller;
 import com.codecool.security.model.internal.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -37,4 +38,13 @@ public class UserAccountCaller {
     public OfferList getAllOffers(String username) {
         return template.getForObject(userAccountURL+"getalloffers/"+username, OfferList.class);
     }
+
+    public OfferList getOffersPerStock(String username, String stock) {
+        return template.getForObject(userAccountURL+"getoffers/"+username+"/"+stock, OfferList.class);
+    }
+
+    public StockPerformanceList getStockPerformanceList(String username) {
+        return template.getForObject(userAccountURL+"getStockPerformanceList/"+username, StockPerformanceList.class);
+    }
+
 }

@@ -4,6 +4,7 @@ import com.codecool.useraccount.model.*;
 import com.codecool.useraccount.model.internal.OfferList;
 import com.codecool.useraccount.model.internal.PlaceOffer;
 import com.codecool.useraccount.model.internal.ReplaceOffer;
+import com.codecool.useraccount.model.internal.StockPerformanceList;
 import com.codecool.useraccount.repository.OfferRepository;
 import com.codecool.useraccount.repository.StockRepository;
 import com.codecool.useraccount.repository.UserAccountRepository;
@@ -195,18 +196,23 @@ public class UserController {
     }
 
     //USED
-    @GetMapping("getoffers/{stock}")
-    public List<Offer> getOffersPerStock(@PathVariable("stock") String stock){
-        UserAccount defaultUserAccount = userAccountRepository.findByNickName("Mr.T");
-        return defaultUserAccount.getOffers().stream().filter(offer -> offer.getStock().getSymbol().equals(stock)).collect(Collectors.toList());
+    @GetMapping("getoffers/{username}/{stock}")
+    public OfferList getOffersPerStock(@PathVariable("username") String username, @PathVariable("stock") String stock){
+        UserAccount userAccount = userAccountRepository.findByUsername(username);
+        OfferList offerList = OfferList.builder()
+                .offers(userAccount.getOffers().stream().filter(offer -> offer.getStock().getSymbol().equals(stock)).collect(Collectors.toList()))
+                .build();
+        return offerList;
     }
 
     //USED
-    @GetMapping("getStockPerformanceList")
-    public List<StockPerformance> getStockPerformanceList(){
-        UserAccount defaultUserAccount = userAccountRepository.findByNickName("Mr.T");
-        return stockPerformanceListUpdater.getStockPerformanceList(defaultUserAccount);
-
+    @GetMapping("getStockPerformanceList/{username}")
+    public StockPerformanceList getStockPerformanceList(@PathVariable("username") String username){
+        UserAccount userAccount = userAccountRepository.findByUsername(username);
+        StockPerformanceList stockPerformanceList = StockPerformanceList.builder()
+                .stockPerformancesList(stockPerformanceListUpdater.getStockPerformanceList(userAccount))
+                .build();
+        return stockPerformanceList;
     }
 
     //USED
